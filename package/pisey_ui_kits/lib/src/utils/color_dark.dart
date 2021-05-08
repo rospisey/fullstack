@@ -12,7 +12,7 @@ bool isIOS(BuildContext context) {
   }
 } // check if android or ios
 
-bool isThemeCurrentlyDark(BuildContext context) {
+bool psIsThemeCurrentlyDark(BuildContext context) {
   if (Theme.of(context).brightness == Brightness.dark) {
     return true;
   } else {
@@ -21,7 +21,7 @@ bool isThemeCurrentlyDark(BuildContext context) {
 } //returns current theme status
 
 Color invertColorsTheme(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.primary;
   } else {
     return MyColors.accent;
@@ -29,63 +29,63 @@ Color invertColorsTheme(BuildContext context) {
 } //returns appropriate theme colors for ui elements
 
 Color invertInvertColorsTheme(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.accent;
   } else {
     return MyColors.primary;
   }
 } //keeps the same colors lol
 
-Color inNormalIsDarkToLight(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorDarkToLight(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.light;
   } else {
     return MyColors.dark;
   }
 } //returns appropriate mild colors for text visibility
 
-Color inNormalIsLightToDark(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorLightToDark(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.dark;
   } else {
     return MyColors.light;
   }
 } //keeps the same colors lol
 
-Color inNormalIsBlackToWhite(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorBlackToWhite(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.white;
   } else {
     return MyColors.black;
   }
 } //returns appropriate strong colors for text visibility
 
-Color inNormalIsWhiteToBlack(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorWhiteToBlack(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MyColors.black;
   } else {
     return MyColors.white;
   }
 } //keeps the same colors lol
 
-Color inNormalIsYellowToOrange(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psYellowToOrange(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MaterialColors.orange;
   } else {
     return MaterialColors.yellow;
   }
 } //returns appropriate material colors
 
-Color inNormalIsOrangeToYellow(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorOrangeToYellow(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return MaterialColors.yellow;
   } else {
     return MaterialColors.orange;
   }
 } //keeps the same colors lol
 
-Color inNormalShadowIsLightToBlack(BuildContext context) {
-  if (isThemeCurrentlyDark(context)) {
+Color psColorShadowIsLightToBlack(BuildContext context) {
+  if (psIsThemeCurrentlyDark(context)) {
     return ShadowColors.dark;
   } else {
     return ShadowColors.light;

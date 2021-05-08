@@ -11,8 +11,6 @@ class MyTabBar extends StatefulWidget {
 }
 
 class _MyTabBarState extends State<MyTabBar> {
-  File? _image;
-
   Future<PickedFile> getImaageFile(ImageSource source) async {
     var image = await ImagePicker().getImage(
         source: source, imageQuality: 10, maxHeight: 512, maxWidth: 512);
@@ -32,7 +30,7 @@ class _MyTabBarState extends State<MyTabBar> {
           leading: IconButton(
             icon: Icon(
               EvaIcons.menu,
-              color: inNormalIsBlackToWhite(context),
+              color: psColorBlackToWhite(context),
             ),
             onPressed: () {
               // _scaffoldKey.currentState.openDrawer();
@@ -42,12 +40,12 @@ class _MyTabBarState extends State<MyTabBar> {
             IconButton(
               icon: Icon(EvaIcons.search),
               onPressed: () {},
-              color: inNormalIsBlackToWhite(context),
+              color: psColorBlackToWhite(context),
             ),
             IconButton(
                 icon: Icon(EvaIcons.bellOutline),
                 onPressed: widget.onPressed,
-                color: inNormalIsBlackToWhite(context)),
+                color: psColorBlackToWhite(context)),
           ],
           automaticallyImplyLeading: false,
           centerTitle: false,

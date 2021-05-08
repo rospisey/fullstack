@@ -5,7 +5,7 @@ TextStyle myDefaultTextStyle(BuildContext context) {
       fontFamily: 'Poppins',
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      color: inNormalIsBlackToWhite(context));
+      color: psColorBlackToWhite(context));
 }
 
 class MyTextUse extends StatelessWidget {
@@ -34,7 +34,7 @@ class MyTextUse extends StatelessWidget {
           Text(
             text,
             style: TextStyle(
-                color: inNormalIsBlackToWhite(context),
+                color: psColorBlackToWhite(context),
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
                 fontFamily: FontFamily.dangrek),

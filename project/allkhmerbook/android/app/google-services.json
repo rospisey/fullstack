@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "812769598203",
+    "project_id": "allkhmerbook",
+    "storage_bucket": "allkhmerbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812769598203:android:594a00ede686eeaef52e5e",
+        "android_client_info": {
+          "package_name": "com.rospisey.allkhmerbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812769598203-18vkcn147vu94h1mt04gnesjvg7thdv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rospisey.allkhmerbook",
+            "certificate_hash": "666d1cc3b8209cb023a8ca21fae4399839f2b620"
+          }
+        },
+        {
+          "client_id": "812769598203-hct09icqpspf3h5difrtoft7h5ikiut4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKWdGAlzcx-PKw0k84OjsmxEyKT9QHOK0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812769598203-hct09icqpspf3h5difrtoft7h5ikiut4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

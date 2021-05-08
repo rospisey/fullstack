@@ -30,8 +30,7 @@ class MyNavBar extends StatelessWidget {
           showSelectedLabels: showLabel,
           showUnselectedLabels: showLabel,
           unselectedIconTheme: IconThemeData(color: Colors.grey),
-          selectedIconTheme:
-              IconThemeData(color: inNormalIsBlackToWhite(context)),
+          selectedIconTheme: IconThemeData(color: psColorBlackToWhite(context)),
           currentIndex: currentIndex!,
           onTap: onTap,
           items: pages!

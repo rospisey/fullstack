@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pisey_ui_kits/pisey_ui_kits.dart';
-import 'pages/homepage.dart';
+import 'home.dart';
 
 void main() {
   runApp(MyApp());
