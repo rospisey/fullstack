@@ -2,7 +2,6 @@ import 'package:allkhmerbook/auth/email_sign_in/signin_signup_page2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'email_sign_in/sign_in1.dart';
 import 'phone_sign_in/phone_signin_page.dart';
 
 class SignInPageView extends StatefulWidget {

@@ -19,35 +19,36 @@ class _LandingPageState extends State<LandingPage> {
     return StreamBuilder<UserModel>(
         stream: provider.onAuthStateChange,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            UserModel? user = snapshot.data;
-            if (user == null) {
-              return SignInPageView();
-            }
-            if (!user.emailVerified!) {
-              return CheckVerifyEmail();
-            } else
-              return MyHomePage(
-                platform: Theme.of(context).platform,
-                title: 'Flutter Download',
-              );
-            // return BaseModel(
-            //   create: FirestoreDatabase().streamData(),
-            //   builder: (context, list, child) {
-            //     if (list == null) {
-            //       return Center(child: CircularProgressIndicator());
-            //     } else {
-            //       return MyHome();
-            //     }
-            //   },
-            // );
-          } else {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
+          // if (snapshot.connectionState == ConnectionState.active) {
+          UserModel? user = snapshot.data;
+          if (user == null) {
+            return SignInPageView();
           }
+          if (!user.emailVerified!) {
+            return CheckVerifyEmail();
+          } else
+            return MyHomePage(
+              platform: Theme.of(context).platform,
+              title: 'Flutter Download',
+            );
+          // return BaseModel(
+          //   create: FirestoreDatabase().streamData(),
+          //   builder: (context, list, child) {
+          //     if (list == null) {
+          //       return Center(child: CircularProgressIndicator());
+          //     } else {
+          //       return MyHome();
+          //     }
+          //   },
+          // );
+
+          // } else {
+          //   return Scaffold(
+          //     body: Center(
+          //       child: CircularProgressIndicator(),
+          //     ),
+          //   );
+          // }
         });
   }
 }

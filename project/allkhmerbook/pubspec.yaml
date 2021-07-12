@@ -46,6 +46,10 @@ dependencies:
   open_file: ^3.2.0
 
   google_fonts: ^2.0.0
+  pisey_ui_kits:
+    path: ../../package/pisey_ui_kits
+  pisey_services:
+    path: ../../package/pisey_services
 
 dev_dependencies:
   flutter_test:

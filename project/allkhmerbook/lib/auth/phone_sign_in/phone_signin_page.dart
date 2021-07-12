@@ -153,7 +153,7 @@ class _PhoneAuthState extends State<PhoneAuth> {
       //   _message =
       //       'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}';
       // });
-      Scaffold.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Phone number verification failed. Please try again!'),
       ));
     };

@@ -1,19 +1,11 @@
-import 'dart:io';
-
-import 'package:allkhmerbook/auth/model/user.dart';
-import 'package:allkhmerbook/encrypt/file_encryption.dart';
-import 'package:allkhmerbook/flutter_isolate.dart';
-import 'package:allkhmerbook/myhomepage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:allkhmerbook/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
 
-import 'auth/landing_page.dart';
 import 'auth/service/auth_provider.dart';
 import 'auth/service/database_provider.dart';
 import 'auth/service/storage_manager.dart';
-import 'view/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 const debug = true;
@@ -56,18 +48,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
-      // home: FileEncryption(),
+      home: MyHome(),
     );
   }
 }
-
-// class MyHttpOverrides extends HttpOverrides {
-  
-//   @override
-//   HttpClient createHttpClient(SecurityContext context) {
-//     return super.createHttpClient(context)
-//       ..badCertificateCallback =
-//           (X509Certificate cert, String host, int port) => true;
-//   }
-// }
