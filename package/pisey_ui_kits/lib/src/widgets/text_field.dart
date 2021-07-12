@@ -3,7 +3,8 @@ part of pisey_ui_kits;
 class MyTextFields extends StatelessWidget {
   final TextEditingController? controller;
   final int? maxLines;
-  const MyTextFields({Key? key, this.controller, this.maxLines})
+  final FocusNode? focus;
+  const MyTextFields({Key? key, this.controller, this.maxLines, this.focus})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -12,6 +13,7 @@ class MyTextFields extends StatelessWidget {
       padding: EdgeInsets.all(15),
       child: TextFormField(
           maxLines: maxLines,
+          focusNode: focus,
           style: TextStyle(
               fontSize: 14,
               color: Colors.grey[800],
@@ -34,7 +36,9 @@ class MyTextFields extends StatelessWidget {
             return null;
           },
           onChanged: (value) {},
-          onSaved: (value) {}),
+          onSaved: (value) {
+            // print(value);
+          }),
     );
   }
 }

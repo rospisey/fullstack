@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pisey_ui_kits/pisey_ui_kits.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ButtonPage extends StatefulWidget {
   @override
@@ -24,6 +23,7 @@ class _ButtonPageState extends State<ButtonPage> {
           height: 5,
         ),
         PsButtonSplash(
+          selectedWidget: () => false,
           splashColor: Colors.indigo.withOpacity(0.1),
           onTap: () {
             print('tap');

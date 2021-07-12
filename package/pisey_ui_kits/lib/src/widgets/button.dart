@@ -25,7 +25,7 @@ class PsButtonOutlineWithIcon extends StatelessWidget {
           label: text ??
               Text(
                 'Outline Icon Text',
-                style: myDefaultTextStyle(context),
+                style: myDefaultTextStylePtSans(context),
               ),
           onPressed: onPressed),
     );
@@ -244,24 +244,28 @@ class _PsButtonSplahBouncingState extends State<PsButtonSplahBouncing>
 class PsButtonSplash extends StatefulWidget {
   final Widget? child;
   final Color? splashColor;
+  final Color? hoverColor;
   final void Function()? onTap;
   final Widget? center;
   final Widget? centerBottom;
   final Widget? topRight;
   final double? borderRadius;
   final EdgeInsetsGeometry? margin;
+  final bool Function()? selectedWidget;
 
-  const PsButtonSplash({
-    Key? key,
-    @required this.child,
-    this.splashColor,
-    @required this.onTap,
-    this.center,
-    this.borderRadius,
-    this.centerBottom,
-    this.topRight,
-    this.margin,
-  }) : super(key: key);
+  PsButtonSplash(
+      {Key? key,
+      @required this.child,
+      this.splashColor,
+      @required this.onTap,
+      this.center,
+      this.borderRadius,
+      this.centerBottom,
+      this.topRight,
+      this.margin,
+      this.hoverColor,
+      this.selectedWidget})
+      : super(key: key);
   @override
   _PsButtonSplashState createState() => _PsButtonSplashState();
 }
@@ -289,8 +293,8 @@ class _PsButtonSplashState extends State<PsButtonSplash>
 
   @override
   void dispose() {
-    super.dispose();
     _controller!.dispose();
+    super.dispose();
   }
 
   @override
@@ -336,6 +340,18 @@ class _PsButtonSplashState extends State<PsButtonSplash>
                     ),
                   ),
                 ),
+                if (widget.selectedWidget != null)
+                  if (widget.selectedWidget!())
+                    Positioned.fill(
+                        child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                        ),
+                      ),
+                    )),
                 if (onhover)
                   Positioned.fill(
                     child: Align(
@@ -345,7 +361,7 @@ class _PsButtonSplashState extends State<PsButtonSplash>
                           borderRadius:
                               BorderRadius.circular(widget.borderRadius ?? 0),
                           color: onhover
-                              ? (widget.splashColor ??
+                              ? (widget.hoverColor ??
                                   Colors.black.withOpacity(0.1))
                               : Colors.transparent,
                         ),

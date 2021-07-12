@@ -1,24 +1,27 @@
 library pisey_ui_kits;
 
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:scroll_app_bar/scroll_app_bar.dart';
-// import 'package:scroll_bottom_navigation_bar/scroll_bottom_navigation_bar.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-// import 'package:md2_tab_indicator/md2_tab_indicator.dart';
-// import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'dart:io';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:pisey_services/pisey_services.dart';
+import 'package:provider/provider.dart';
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+part 'model/local_model.dart';
+part 'model/database_model.dart';
 part 'src/utils/color_dark.dart';
 part 'src/utils/colors.dart';
 part 'src/utils/fonts.dart';
-// part 'src/utils/page_transformer.dart';
 part 'src/utils/text_string.dart';
 part 'src/widgets/expansion_list.dart';
-part 'src/utils/text_styles.dart';
+part 'src/widgets/text_widget.dart';
 part 'src/utils/util_ui.dart';
 part 'src/widgets/bottom_nav.dart';
 part 'src/widgets/button.dart';
@@ -32,4 +35,17 @@ part 'src/widgets/tab_model.dart';
 part 'src/widgets/text_field.dart';
 part 'service/get_date.dart';
 part 'service/next_screen.dart';
-part 'service/pick_image.dart';
+part 'src/widgets/vertical_tab.dart';
+
+part 'src/responsive/helper.dart';
+part 'src/responsive/device_screen_type.dart';
+part 'src/responsive/sizing_information.dart';
+part 'src/responsive/widget_builder.dart';
+part 'src/responsive/responsive_sizing_config.dart';
+
+part 'auth/email_sign_in/email_verify.dart';
+part 'auth/email_sign_in/sign_in1.dart';
+part 'auth/email_sign_in/sign_up1.dart';
+part 'auth/email_sign_in/signin_signup_page2.dart';
+part 'auth/signin_view.dart';
+part 'auth/landing_page.dart';

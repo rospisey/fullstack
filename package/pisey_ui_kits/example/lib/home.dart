@@ -26,8 +26,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyTabBar(
-      pages: itemNames,
+    return Scaffold(
+      appBar: myAppBarResponsive(),
     );
   }
 }

@@ -12,15 +12,17 @@ dependencies:
   flutter:
     sdk: flutter
   eva_icons_flutter: ^3.0.0
-  # scroll_bottom_navigation_bar: ^3.0.0
-  # scroll_app_bar: ^1.0.2
-  # md2_tab_indicator: ^1.0.2
-  # cached_network_image: ^3.0.0
   dots_indicator: ^2.0.0
-
-  image_picker: ^0.7.4
   intl: ^0.17.0
-  # flutter_image_compress: ^1.0.0
+  google_fonts: ^2.0.0
+  flutter_svg: ^0.22.0
+  provider: ^5.0.0
+  pisey_services:
+    path: ../../package/pisey_services
+  stacked_services:
+  stacked:
+
+publish_to: none
 
 dev_dependencies:
   flutter_test:

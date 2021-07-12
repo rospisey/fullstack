@@ -37,8 +37,10 @@ class MyDropDownFormField extends StatelessWidget {
 class MyDropDownButton extends StatelessWidget {
   final List? categories;
   final String? valueSelected;
+  final void Function(Object?)? onChanged;
 
-  const MyDropDownButton({Key? key, this.categories, this.valueSelected})
+  const MyDropDownButton(
+      {Key? key, this.categories, this.valueSelected, this.onChanged})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class MyDropDownButton extends StatelessWidget {
                 color: Colors.grey[800],
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w500),
-            onChanged: (value) {},
+            onChanged: onChanged,
             value: valueSelected,
             hint: Text('Select Category'),
             items: categories!.map((f) {

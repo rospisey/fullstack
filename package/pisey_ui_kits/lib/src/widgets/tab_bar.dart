@@ -11,12 +11,6 @@ class MyTabBar extends StatefulWidget {
 }
 
 class _MyTabBarState extends State<MyTabBar> {
-  Future<PickedFile> getImaageFile(ImageSource source) async {
-    var image = await ImagePicker().getImage(
-        source: source, imageQuality: 10, maxHeight: 512, maxWidth: 512);
-    return image!;
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -25,7 +19,7 @@ class _MyTabBarState extends State<MyTabBar> {
         appBar: AppBar(
           title: Text(
             'MathTeamKh',
-            style: myDefaultTextStyle(context),
+            style: myDefaultTextStylePtSans(context),
           ),
           leading: IconButton(
             icon: Icon(
@@ -69,7 +63,7 @@ class _MyTabBarState extends State<MyTabBar> {
                       icon: e.icon,
                       child: Text(
                         e.text!,
-                        style: myDefaultTextStyle(context),
+                        style: myDefaultTextStylePtSans(context),
                       ),
                     ),
                   )
