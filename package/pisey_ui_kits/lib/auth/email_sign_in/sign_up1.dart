@@ -11,7 +11,7 @@ class SignUpPage1 extends StatefulWidget {
 
 class _SignUpPage1State extends State<SignUpPage1> {
   bool offsecureText = true;
-  Icon lockIcon = Icon(EvaIcons.eyeOff);
+  Icon lockIcon = Icon(Icons.hide_image);
   var emailCtrl = TextEditingController();
   var passCtrl = TextEditingController();
   var nameCtrl = TextEditingController();
@@ -28,12 +28,12 @@ class _SignUpPage1State extends State<SignUpPage1> {
     if (offsecureText == true) {
       setState(() {
         offsecureText = false;
-        lockIcon = Icon(EvaIcons.eyeOff);
+        lockIcon = Icon(Icons.hide_image);
       });
     } else {
       setState(() {
         offsecureText = true;
-        lockIcon = Icon(EvaIcons.eye);
+        lockIcon = Icon(Icons.show_chart_outlined);
       });
     }
   }

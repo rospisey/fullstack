@@ -2,14 +2,10 @@ part of pisey_ui_kits;
 
 class SignInPage2 extends StatefulWidget {
   final GlobalKey<ScaffoldState>? snackbar;
-  final bool isDataCloudFirestore;
-  final bool isDataRealTimeDatabase;
 
   const SignInPage2({
     Key? key,
     this.snackbar,
-    this.isDataCloudFirestore: true,
-    this.isDataRealTimeDatabase: true,
   }) : super(key: key);
   @override
   _SignInPage2State createState() => _SignInPage2State();
@@ -58,16 +54,14 @@ class _SignInPage2State extends State<SignInPage2> {
       if (_formType == FormType.login) {
         var user = await auth.signInAccEmail(_email!, _password!);
         if (user != null) {
-          if (widget.isDataCloudFirestore) {
-            await _firestoreService.updateData('users/${user.user!.uid}', {
-              'presence': true,
-              'lastSeenInEpoch': DateTime.now().millisecondsSinceEpoch,
-            }).catchError((onError) {
-              auth.setBusy(false);
-              _snackbarService.showDialog(
-                  title: 'Firestore Error', description: '$onError');
-            });
-          }
+          _firestoreService.updateData('users/${user.user!.uid}', {
+            'presence': true,
+            'lastSeenInEpoch': DateTime.now().millisecondsSinceEpoch,
+          }).catchError((onError) {
+            auth.setBusy(false);
+            _snackbarService.showDialog(
+                title: 'Firestore Error', description: '$onError');
+          });
         }
       } else {
         auth.setBusy(true);
@@ -80,20 +74,18 @@ class _SignInPage2State extends State<SignInPage2> {
         });
 
         if (user != null) {
-          if (widget.isDataRealTimeDatabase) {
-            await _firestoreService.setData('users/${user.user!.uid}', {
-              'username': _username,
-              'mail': _email,
-              'createdTime': DateTime.now().millisecondsSinceEpoch,
-              'presence': false,
-              'lastSeenInEpoch': DateTime.now().millisecondsSinceEpoch,
-              'role': 'member'
-            }).catchError((onError) {
-              auth.setBusy(false);
-              _snackbarService.showDialog(
-                  title: 'Database Error', description: '$onError');
-            });
-          }
+          _firestoreService.setData('users/${user.user!.uid}', {
+            'username': _username,
+            'mail': _email,
+            'createdTime': DateTime.now().millisecondsSinceEpoch,
+            'presence': false,
+            'lastSeenInEpoch': DateTime.now().millisecondsSinceEpoch,
+            'role': 'member'
+          }).catchError((onError) {
+            auth.setBusy(false);
+            _snackbarService.showDialog(
+                title: 'Database Error', description: '$onError');
+          });
         }
       }
     }

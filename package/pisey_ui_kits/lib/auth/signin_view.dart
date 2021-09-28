@@ -2,15 +2,11 @@ part of pisey_ui_kits;
 
 class SignInPageView extends StatefulWidget {
   final Widget? emailPage;
-  final bool isDataCloudFirestore;
-  final bool isDataRealTimeDatabase;
 
-  const SignInPageView(
-      {Key? key,
-      this.emailPage,
-      this.isDataCloudFirestore: true,
-      this.isDataRealTimeDatabase: false})
-      : super(key: key);
+  const SignInPageView({
+    Key? key,
+    this.emailPage,
+  }) : super(key: key);
   @override
   _SignInPageViewState createState() => _SignInPageViewState();
 }
@@ -57,71 +53,85 @@ class _SignInPageViewState extends State<SignInPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4, 0.7, 0.9],
-              colors: [
-                Color(0xFF3594DD),
-                Color(0xFF4563DB),
-                Color(0xFF5036D5),
-                Color(0xFF5B16D0),
-              ],
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildPageIndicator(),
+    return ViewModelBuilder<SignInViewModel>.reactive(
+        onModelReady: (model) => model.hasUID(),
+        createNewModelOnInsert: true,
+        fireOnModelReadyOnce: true,
+        initialiseSpecialViewModelsOnce: true,
+        builder: (context, model, child) {
+          if (!model.ishasUID!) {
+            return Scaffold(
+              key: _scaffoldKey,
+              body: AnnotatedRegion<SystemUiOverlayStyle>(
+                value: SystemUiOverlayStyle.light,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      stops: [0.1, 0.4, 0.7, 0.9],
+                      colors: [
+                        Color(0xFF3594DD),
+                        Color(0xFF4563DB),
+                        Color(0xFF5036D5),
+                        Color(0xFF5B16D0),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 9,
-                  child: Container(
-                    height: 600.0,
-                    child: PageView(
-                      // physics: NeverScrollableScrollPhysics(),
-                      physics: ClampingScrollPhysics(),
-                      controller: _pageController,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 40.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(
+                          flex: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: _buildPageIndicator(),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 9,
+                          child: Container(
+                            height: 600.0,
+                            child: PageView(
+                              // physics: NeverScrollableScrollPhysics(),
+                              physics: ClampingScrollPhysics(),
+                              controller: _pageController,
 
-                      onPageChanged: (int page) {
-                        setState(() {
-                          _currentPage = page;
-                        });
-                      },
-                      children: [
-                        // SocailSignIn(
-                        //   snackbar: _scaffoldKey,
-                        // ),
-                        // PhoneAuth(),
-                        widget.emailPage ??
-                            SignInPage2(
-                              isDataCloudFirestore: widget.isDataCloudFirestore,
-                              isDataRealTimeDatabase:
-                                  widget.isDataRealTimeDatabase,
-                              snackbar: _scaffoldKey,
+                              onPageChanged: (int page) {
+                                setState(() {
+                                  _currentPage = page;
+                                });
+                              },
+                              children: [
+                                // SocailSignIn(
+                                //   snackbar: _scaffoldKey,
+                                // ),
+                                // PhoneAuth(),
+                                widget.emailPage ??
+                                    SignInPage2(
+                                      snackbar: _scaffoldKey,
+                                    ),
+                              ],
                             ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ),
+            );
+          } else {
+            model.hasUID();
+            return Scaffold(
+              body: Center(
+                child: Text('Sign in page'),
+              ),
+            );
+          }
+        },
+        viewModelBuilder: () => SignInViewModel());
   }
 }

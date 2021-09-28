@@ -3,84 +3,87 @@ part of pisey_ui_kits;
 class LandingPage extends StatelessWidget {
   final Widget? child;
   final Widget? emailPage;
-  final bool USE_EMULATOR;
-  final bool isDataCloudFirestore;
-  final bool isDataRealTimeDatabase;
 
   const LandingPage({
     Key? key,
     this.child,
     this.emailPage,
-    this.USE_EMULATOR = false,
-    this.isDataCloudFirestore: true,
-    this.isDataRealTimeDatabase: false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SignInViewModel>.reactive(
+        onModelReady: (model) {
+          model.handleStartUpLogic();
+        },
         builder: (context, users, userChild) {
+          // return Scaffold(
+          //   body: Center(
+          //     child: CircularProgressIndicator(),
+          //   ),
+          // );
           return ViewModelBuilder<StreamUser>.reactive(
+              onModelReady: (model) => model.hasUID(),
+              disposeViewModel: true,
               builder: (context, streamUser, streamUserChild) {
-                if (streamUser.data == null && !users.isBusy) {
-                  return Row(
-                    children: [
-                      Flexible(
-                          flex: 1,
-                          child: SignInPageView(
-                            isDataCloudFirestore: isDataCloudFirestore,
-                            isDataRealTimeDatabase: isDataRealTimeDatabase,
-                            emailPage: emailPage,
-                          )),
-                      Flexible(
-                          flex: getValueForScreenType(
-                              context: context,
-                              mobile: 0,
-                              desktop: 2,
-                              tablet: 1,
-                              watch: 0),
-                          child: Container())
-                    ],
-                  );
+                if (streamUser.ishasUID!) {
+                  return child!;
                 } else {
-                  if (!streamUser.data!.emailVerified && !users.isBusy) {
+                  if (streamUser.data == null) {
+                    // print('${streamUser.data!.uid}');
+                    return Row(
+                      children: [
+                        Flexible(
+                            flex: 1,
+                            child: SignInPageView(
+                              emailPage: emailPage,
+                            )),
+                        Flexible(
+                            flex: getValueForScreenType(
+                                context: context,
+                                mobile: 0,
+                                desktop: 2,
+                                tablet: 1,
+                                watch: 0),
+                            child: Container())
+                      ],
+                    );
+                  }
+                  if (!streamUser.data!.emailVerified) {
                     return CheckVerifyEmail();
                   } else {
                     return child!;
                   }
                 }
               },
+              //       // if (streamUser.data == null) {
+              //       //   // print('${streamUser.data!.uid}');
+              //       //   return Row(
+              //       //     children: [
+              //       //       Flexible(
+              //       //           flex: 1,
+              //       //           child: SignInPageView(
+              //       //             emailPage: emailPage,
+              //       //           )),
+              //       //       Flexible(
+              //       //           flex: getValueForScreenType(
+              //       //               context: context,
+              //       //               mobile: 0,
+              //       //               desktop: 2,
+              //       //               tablet: 1,
+              //       //               watch: 0),
+              //       //           child: Container())
+              //       //     ],
+              //       //   );
+              //       // }
+              //       // if (!streamUser.data!.emailVerified) {
+              //       //   return CheckVerifyEmail();
+              //       // } else {
+              //       //   return child!;
+              //       // }
+              //     },
               viewModelBuilder: () => StreamUser());
         },
         viewModelBuilder: () => SignInViewModel());
-    //   return ViewModelBuilder<StreamUser>.reactive(
-    //       builder: (context, user, userchild) {
-    //         if (user.data == null && !user.isBusy) {
-    //           return Row(
-    //             children: [
-    //               Flexible(
-    //                   flex: 1,
-    //                   child: SignInPageView(
-    //                     isDataCloudFirestore: isDataCloudFirestore,
-    //                     isDataRealTimeDatabase: isDataRealTimeDatabase,
-    //                     emailPage: emailPage,
-    //                   )),
-    //               Flexible(
-    //                   flex: getValueForScreenType(
-    //                       context: context,
-    //                       mobile: 0,
-    //                       desktop: 2,
-    //                       tablet: 1,
-    //                       watch: 0),
-    //                   child: Container())
-    //             ],
-    //           );
-    //         }
-    //         if (!user.data!.emailVerified && !user.isBusy) {
-    //           return CheckVerifyEmail();
-    //         }
-    //         return child!;
-    //       },
-    //       viewModelBuilder: () => StreamUser());
   }
 }

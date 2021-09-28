@@ -3,7 +3,6 @@ library pisey_services;
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -40,3 +39,4 @@ part 'bloc/sign_in_viewmodel.dart';
 part 'bloc/stream_user.dart';
 part 'firebase_service/user_reload.dart';
 part 'bloc/internet_view_model.dart';
+part 'firebase_service/shared_preference_service.dart';

@@ -1,14 +1,49 @@
 part of pisey_services;
 
 class StreamUser extends StreamViewModel<User?> {
-  bool? _isVerify;
-  bool? get isVerify => _isVerify;
+  bool? _ishasUID;
+  bool? get ishasUID => _ishasUID;
 
   final DialogService _dialogService =
       StackedLocator.instance.locator<DialogService>();
+  final FirebaseAuthService _firebaseAuthService =
+      StackedLocator.instance.locator<FirebaseAuthService>();
+  final NavigationService _navigationService =
+      StackedLocator.instance.locator<NavigationService>();
 
   Stream<User?> get onAuthStateChange {
     return FirebaseAuth.instance.userChanges();
+  }
+
+  final SharedPreferenceService _sharedPreferenceService =
+      StackedLocator.instance.locator<SharedPreferenceService>();
+
+  hasUID() async {
+    // await _sharedPreferenceService.getStringUID('uid').then((value) {
+    //   _ishasUID = value != null;
+    //   notifyListeners();
+    // });
+    // await _firebaseAuthService.getCurrentUser().then((value) {
+    //   _ishasUID = value != null;
+    //   notifyListeners();
+    // });
+
+    await onAuthStateChange.first.then((value) {
+      _ishasUID = value != null;
+      notifyListeners();
+    });
+  }
+
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut().then((value) {
+        hasUID();
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      _dialogService.showDialog(
+          description: e.message!, title: 'Sign In Failed');
+    }
   }
 
   @override

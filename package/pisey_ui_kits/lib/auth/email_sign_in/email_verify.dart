@@ -22,8 +22,19 @@ class CheckVerifyEmail extends ViewModelWidget<StreamUser> {
           child: Text('please check email to verify'),
         ),
         TextButton(
-            onPressed: () async => await user.data!.reload(),
+            onPressed: () async {
+              user.setBusy(true);
+              await user.data!.reload();
+              user.setBusy(false);
+            },
             child: user.isBusy ? CircularProgressIndicator() : Text('Check')),
+        TextButton(
+            onPressed: () async {
+              user.setBusy(true);
+              user.data!.sendEmailVerification();
+              user.setBusy(false);
+            },
+            child: user.isBusy ? CircularProgressIndicator() : Text('Resend')),
       ],
     ));
   }

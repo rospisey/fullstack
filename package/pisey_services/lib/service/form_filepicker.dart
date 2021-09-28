@@ -71,7 +71,7 @@ class FormBuilderFilePicker extends FormBuilderField<List<PlatformFile>> {
       VoidCallback? onReset,
       FocusNode? focusNode,
       this.maxFiles = 1,
-      this.withData = false,
+      this.withData = true,
       this.withReadStream = false,
       this.allowMultiple = false,
       this.previewImages = true,
@@ -86,7 +86,17 @@ class FormBuilderFilePicker extends FormBuilderField<List<PlatformFile>> {
           key: key,
           initialValue: initialValue,
           name: name,
-          validator: validator,
+          validator: (list) {
+            if (list != null) {
+              if (list.any((element) =>
+                  !allowedExtensions!.contains(element.extension!))) {
+                return 'file type is unsupported';
+              } else
+                return validator!(list);
+            } else {
+              return validator!(list);
+            }
+          },
           valueTransformer: valueTransformer,
           onChanged: onChanged,
           autovalidateMode: autovalidateMode,
@@ -337,16 +347,16 @@ class _FormBuilderFilePickerState
     switch (lowerCaseFileExt) {
       case 'doc':
       case 'docx':
-        return CommunityMaterialIcons.file_word;
+        return Icons.file_download;
       case 'log':
-        return CommunityMaterialIcons.script_text;
+        return Icons.file_download;
       case 'pdf':
-        return CommunityMaterialIcons.file_pdf;
+        return Icons.file_download;
       case 'txt':
-        return CommunityMaterialIcons.script_text;
+        return Icons.file_download;
       case 'xls':
       case 'xlsx':
-        return CommunityMaterialIcons.file_excel;
+        return Icons.file_download;
       default:
         return Icons.insert_drive_file;
     }

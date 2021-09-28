@@ -79,7 +79,7 @@ PreferredSizeWidget myAppbar(BuildContext? context,
         [
           IconButton(
             icon: Icon(
-              EvaIcons.search,
+              Icons.search,
               color: Colors.indigo,
             ),
             onPressed: () {},
@@ -138,7 +138,7 @@ PreferredSize myAppBarResponsive() {
                             left: 20, right: 20, top: 15, bottom: 15)),
                   ),
                   icon: Icon(
-                    EvaIcons.save,
+                    Icons.save,
                     color: Colors.white,
                     size: 20,
                   ),
@@ -169,7 +169,7 @@ PreferredSize myAppBarResponsive() {
                           left: 20, right: 20, top: 15, bottom: 15)),
                 ),
                 icon: Icon(
-                  EvaIcons.person,
+                  Icons.person,
                   color: Colors.grey[800],
                   size: 20,
                 ),

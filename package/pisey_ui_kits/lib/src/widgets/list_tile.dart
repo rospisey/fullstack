@@ -127,7 +127,7 @@ class MyListTileForIndicator extends StatelessWidget {
                             blurRadius: 2,
                             offset: Offset(5, 5))
                       ]),
-                  child: icon ?? Icon(EvaIcons.menu2Outline),
+                  child: icon ?? Icon(Icons.menu),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20, top: 25),

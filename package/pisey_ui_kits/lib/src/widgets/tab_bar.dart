@@ -23,7 +23,7 @@ class _MyTabBarState extends State<MyTabBar> {
           ),
           leading: IconButton(
             icon: Icon(
-              EvaIcons.menu,
+              Icons.menu,
               color: psColorBlackToWhite(context),
             ),
             onPressed: () {
@@ -32,12 +32,12 @@ class _MyTabBarState extends State<MyTabBar> {
           ),
           actions: [
             IconButton(
-              icon: Icon(EvaIcons.search),
+              icon: Icon(Icons.search),
               onPressed: () {},
               color: psColorBlackToWhite(context),
             ),
             IconButton(
-                icon: Icon(EvaIcons.bellOutline),
+                icon: Icon(Icons.notification_add_outlined),
                 onPressed: widget.onPressed,
                 color: psColorBlackToWhite(context)),
           ],

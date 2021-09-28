@@ -9,24 +9,24 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  firebase_auth:
-  cloud_firestore:
-  provider:
-  shared_preferences:
+  firebase_auth: ^2.0.0
+  cloud_firestore: ^2.3.0
+  provider: ^5.0.0
+  shared_preferences: ^2.0.6
   flutter:
     sdk: flutter
   pisey_ui_kits:
     path: ../../package/pisey_ui_kits
-  connectivity:
-  firebase_database:
-  firebase_storage:
-  file_picker:
-  permission_handler:
-  community_material_icon:
-  flutter_form_builder:
-  stacked_services:
-  stacked:
-  rxdart:
+  connectivity: ^3.0.6
+  firebase_database: ^7.1.1
+  firebase_storage: ^9.0.0
+  file_picker: ^3.0.3
+  permission_handler: ^8.1.2
+  # community_material_icon: ^5.9.55
+  flutter_form_builder: ^6.0.1
+  stacked_services: ^0.8.10
+  stacked: ^2.2.2
+  rxdart: ^0.27.1
 
 publish_to: none
 
