@@ -4,7 +4,7 @@ const admin = require("firebase-admin");
 const userPrivacyPaths = require("../user_privacy.json");
 const storage = admin.storage();
 
-const clearStorageData = (uid) => {
+const clearStorageBoooks = (uid) => {
   const paths = userPrivacyPaths.storage.clearData;
   const promises = [];
 
@@ -26,3 +26,5 @@ const clearStorageData = (uid) => {
 const replaceUID = (str, uid) => {
   return str.replace(/UID_VARIABLE/g, uid);
 };
+
+module.exports = { clearStorageBoooks };

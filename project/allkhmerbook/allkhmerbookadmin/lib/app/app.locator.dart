@@ -6,6 +6,7 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:allkhmerbookadmin/navigator/auth_repository.dart';
 import 'package:pisey_services/pisey_services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -25,6 +26,8 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => RealTimeService.instance);
   locator.registerLazySingleton(() => FirestoreService.instance);
-  locator.registerLazySingleton(() => StorageService.instance);
   locator.registerLazySingleton(() => FirebaseAuthService.instance);
+  locator.registerLazySingleton(() => StorageService.instance);
+  locator.registerLazySingleton(() => SharedPreferenceService());
+  locator.registerLazySingleton(() => AuthRepository());
 }

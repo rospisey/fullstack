@@ -1,7 +1,9 @@
 import 'package:allkhmerbookadmin/page/bloc/firebase/upload_view_model.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart' as form;
+
 import 'package:pisey_services/pisey_services.dart';
 import 'package:pisey_ui_kits/pisey_ui_kits.dart';
 import 'package:file_picker/file_picker.dart';
@@ -71,8 +73,6 @@ class _UploadPageState extends State<UploadPage> {
     'ភូមិវិទ្យា',
   ];
 
-  List<FocusNode> _focus = [for (int i = 0; i <= 5; i++) FocusNode()];
-
   void _toggleLoading() {
     setState(() {
       _isLoading = !_isLoading;
@@ -131,11 +131,11 @@ class _UploadPageState extends State<UploadPage> {
     }
   }
 
-  FocusNode? focusNode;
+  // FocusNode? focusNode;
 
   @override
   void initState() {
-    focusNode = FocusNode();
+    // focusNode = FocusNode();
     super.initState();
   }
 
@@ -160,26 +160,6 @@ class _UploadPageState extends State<UploadPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                // _ListenState(),
-                // form.FormBuilderField(
-                //   name: 'grade',
-                //   validator: form.FormBuilderValidators.required(context),
-                //   builder: (FormFieldState<dynamic> field) {
-                //     return InputDecorator(
-                //       decoration: InputDecoration(errorText: field.errorText),
-                //       child: MyDropDownButton(
-                //           onChanged: (val) {
-                //             setState(() {
-                //               _bookgrade = val as String;
-                //               field.didChange(_bookgrade);
-                //             });
-                //             print(field.validate());
-                //           },
-                //           valueSelected: _bookgrade,
-                //           categories: bookGrade.map((e) => e).toList()),
-                //     );
-                //   },
-                // ),
                 form.FormBuilderDropdown(
                   onChanged: (st) {
                     uploadModel.setMapData({'grade': st});
@@ -209,7 +189,6 @@ class _UploadPageState extends State<UploadPage> {
                           ))
                       .toList(),
                 ),
-                if (uploadModel.dataMap != null) Text('${uploadModel.dataMap}'),
                 form.FormBuilderSegmentedControl(
                   onChanged: (st) {
                     uploadModel.setMapData({'bookType': st});
@@ -228,12 +207,10 @@ class _UploadPageState extends State<UploadPage> {
                 SizedBox(
                   height: 15,
                 ),
-                if (uploadModel.uploadModel!.isNotEmpty) _ListenState(),
-
-                _FilePickerPDF(),
-                // _FilePickerImage(),
+                _ListenFile(),
+                _FilePickerImage(),
                 _FilePickerJSON(),
-
+                _FilePickerPDF(),
                 SizedBox(
                   height: 15,
                 ),
@@ -245,10 +222,8 @@ class _UploadPageState extends State<UploadPage> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           uploadModel.uploadMultiFiles('books/');
-                          // await saveAndSubmit().catchError((e) => print(e));
-                          // .then((value) => _formKey.currentState!.reset());
                         } else {
-                          print("validation failed");
+                          BotToast.showText(text: "Validate error");
                         }
                       },
                       margin: myMargin(left: 0, bottom: 0, right: 0, top: 0),
@@ -313,84 +288,76 @@ class _UploadPageState extends State<UploadPage> {
     );
   }
 
-  Column listFormField(MapEntry<int, FocusNode> focus, BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            allTexts[focus.key]['title'],
-            style: myDefaultTextStylePtSans(context),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        form.FormBuilderTextField(
-          decoration: InputDecoration(
-            hintText: allTexts[focus.key]['title'],
-            //prefixIcon: Icon(Icons.email),
-            border: OutlineInputBorder(),
-            labelStyle: TextStyle(color: Colors.grey),
-            hintStyle: TextStyle(color: Colors.grey),
-            counterStyle: TextStyle(color: Colors.grey),
-          ),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          name: allTexts[focus.key]['title'],
-          validator: form.FormBuilderValidators.compose([
-            form.FormBuilderValidators.required(context),
-            form.FormBuilderValidators.match(
-                context,
-                toTextStringPatternModel(allTexts[focus.key]['pattern'])
-                    .pattern
-                    .toString(),
-                errorText:
-                    toTextStringPatternModel(allTexts[focus.key]['pattern'])
-                        .errorText),
-          ]),
-          // autovalidateMode: AutovalidateMode.onUserInteraction,
-          textInputAction:
-              toTextInputAction(allTexts[focus.key]['inputAction']),
-          focusNode: focus.value,
-          keyboardType: toTextInputType(allTexts[focus.key]['keyType']),
-          onEditingComplete: () {
-            if (focus.key < _focus.length - 1) {
-              if (allTexts[focus.key]['inputAction'] ==
-                  'TextInputAction.next') {
-                FocusScope.of(context).requestFocus(_focus[focus.key + 1]);
-              }
-            } else if (focus.key <= _focus.length - 1) {
-              if (allTexts[focus.key]['inputAction'] ==
-                  'TextInputAction.previous') {
-                FocusScope.of(context).requestFocus(_focus[focus.key - 1]);
-              } else if (allTexts[focus.key]['inputAction'] ==
-                      'TextInputAction.done' ||
-                  allTexts[focus.key]['inputAction'] ==
-                      'TextInputAction.none') {
-                FocusScope.of(context).unfocus();
-              } else if (allTexts[focus.key]['inputAction'] ==
-                  'TextInputAction.newline') {
-                return null;
-              } else {
-                saveAndSubmit();
-              }
-            }
-          },
-        ),
-        SizedBox(
-          height: 15,
-        )
-      ],
-    );
-  }
-}
-
-class _ListenState extends ViewModelWidget<UploadViewModel> {
-  _ListenState({Key? key}) : super(key: key, reactive: true);
-  @override
-  Widget build(BuildContext context, UploadViewModel viewModel) {
-    return Text('${viewModel.uploadModel!.map((e) => e.toMap()).toList()} ');
-  }
+  // Column listFormField(MapEntry<int, FocusNode> focus, BuildContext context) {
+  //   return Column(
+  //     children: [
+  //       Align(
+  //         alignment: Alignment.centerLeft,
+  //         child: Text(
+  //           allTexts[focus.key]['title'],
+  //           style: myDefaultTextStylePtSans(context),
+  //         ),
+  //       ),
+  //       SizedBox(
+  //         height: 10,
+  //       ),
+  //       form.FormBuilderTextField(
+  //         decoration: InputDecoration(
+  //           hintText: allTexts[focus.key]['title'],
+  //           //prefixIcon: Icon(Icons.email),
+  //           border: OutlineInputBorder(),
+  //           labelStyle: TextStyle(color: Colors.grey),
+  //           hintStyle: TextStyle(color: Colors.grey),
+  //           counterStyle: TextStyle(color: Colors.grey),
+  //         ),
+  //         autovalidateMode: AutovalidateMode.onUserInteraction,
+  //         name: allTexts[focus.key]['title'],
+  //         validator: form.FormBuilderValidators.compose([
+  //           form.FormBuilderValidators.required(context),
+  //           form.FormBuilderValidators.match(
+  //               context,
+  //               toTextStringPatternModel(allTexts[focus.key]['pattern'])
+  //                   .pattern
+  //                   .toString(),
+  //               errorText:
+  //                   toTextStringPatternModel(allTexts[focus.key]['pattern'])
+  //                       .errorText),
+  //         ]),
+  //         // autovalidateMode: AutovalidateMode.onUserInteraction,
+  //         textInputAction:
+  //             toTextInputAction(allTexts[focus.key]['inputAction']),
+  //         focusNode: focus.value,
+  //         keyboardType: toTextInputType(allTexts[focus.key]['keyType']),
+  //         onEditingComplete: () {
+  //           if (focus.key < _focus.length - 1) {
+  //             if (allTexts[focus.key]['inputAction'] ==
+  //                 'TextInputAction.next') {
+  //               FocusScope.of(context).requestFocus(_focus[focus.key + 1]);
+  //             }
+  //           } else if (focus.key <= _focus.length - 1) {
+  //             if (allTexts[focus.key]['inputAction'] ==
+  //                 'TextInputAction.previous') {
+  //               FocusScope.of(context).requestFocus(_focus[focus.key - 1]);
+  //             } else if (allTexts[focus.key]['inputAction'] ==
+  //                     'TextInputAction.done' ||
+  //                 allTexts[focus.key]['inputAction'] ==
+  //                     'TextInputAction.none') {
+  //               FocusScope.of(context).unfocus();
+  //             } else if (allTexts[focus.key]['inputAction'] ==
+  //                 'TextInputAction.newline') {
+  //               return null;
+  //             } else {
+  //               saveAndSubmit();
+  //             }
+  //           }
+  //         },
+  //       ),
+  //       SizedBox(
+  //         height: 15,
+  //       )
+  //     ],
+  //   );
+  // }
 }
 
 class _FilePickerPDF extends ViewModelWidget<UploadViewModel> {
@@ -439,10 +406,18 @@ class _FilePickerPDF extends ViewModelWidget<UploadViewModel> {
       },
       validator: form.FormBuilderValidators.required(context),
       withData: true,
-      maxFiles: 2,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      maxFiles: 1,
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
+  }
+}
+
+class _ListenFile extends ViewModelWidget<UploadViewModel> {
+  @override
+  Widget build(BuildContext context, UploadViewModel viewModel) {
+    return Text('${viewModel.uploadModel!.map((e) => e.toMap())}');
   }
 }
 
@@ -459,7 +434,6 @@ class _FilePickerImage extends ViewModelWidget<UploadViewModel> {
       spacing: 10,
       runSpacing: 10,
       name: 'image',
-      type: FileType.image,
       validator: form.FormBuilderValidators.required(context),
       decoration: InputDecoration(
         labelText: 'IMAGE',
@@ -470,12 +444,43 @@ class _FilePickerImage extends ViewModelWidget<UploadViewModel> {
           Text('Upload'),
         ],
       ),
-      onChanged: (list) {},
-      onRemove: (list) {},
+      listStackBuilder: (model) {
+        return [
+          Positioned.fill(
+              child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: model.byteTransfer != null
+                  ? ((model.byteTransfer! * MediaQuery.of(context).size.width) /
+                      model.totalBytes!)
+                  : 0,
+              color: Colors.white.withOpacity(0.5),
+            ),
+          )),
+          if (model.state == firebase_storage.TaskState.success)
+            Positioned.fill(
+                child: Align(
+                    alignment: Alignment.center, child: Icon(Icons.check))),
+        ];
+      },
+      onChanged: (list) {
+        viewModel.setUploadModel(list!, 'image');
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       withData: true,
-      allowMultiple: true,
-      maxFiles: 2,
-      previewImages: true,
+      maxFiles: 1,
+      previewImages: false,
+      type: FileType.custom,
+      allowedExtensions: [
+        'gif',
+        'jpg',
+        'jpeg',
+        'png',
+        'webp',
+        'bmp',
+        'dib',
+        'wbmp',
+      ],
     );
   }
 }
@@ -506,7 +511,7 @@ class _FilePickerJSON extends ViewModelWidget<UploadViewModel> {
         return [
           Positioned.fill(
               child: Align(
-            alignment: Alignment.center,
+            alignment: Alignment.centerLeft,
             child: Container(
               width: model.byteTransfer != null
                   ? ((model.byteTransfer! * MediaQuery.of(context).size.width) /
@@ -526,6 +531,7 @@ class _FilePickerJSON extends ViewModelWidget<UploadViewModel> {
       },
       validator: form.FormBuilderValidators.required(context),
       withData: true,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       maxFiles: 1,
       type: FileType.custom,
       allowedExtensions: ['json'],

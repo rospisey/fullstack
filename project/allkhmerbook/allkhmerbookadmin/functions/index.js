@@ -1,17 +1,65 @@
-const functions = require("firebase-functions");
+// const functions = require("firebase-functions");
+// const admin = require("firebase-admin");
+// admin.initializeApp();
+// const userPrivacyPaths = require("./user_privacy.json");
+
+// const db = admin.database();
+// const firestore = admin.firestore();
+// const realtime = admin.database();
+// const storage = admin.storage();
+// const FieldValue = admin.firestore.FieldValue;
+
+// const exportDataBucket = userPrivacyPaths.exportDataUploadBucket;
+
 const admin = require("firebase-admin");
 admin.initializeApp();
-const userPrivacyPaths = require("./user_privacy.json");
-
-const db = admin.database();
+const functions = require("firebase-functions");
 const firestore = admin.firestore();
 const realtime = admin.database();
 const storage = admin.storage();
-const FieldValue = admin.firestore.FieldValue;
 
-const exportDataBucket = userPrivacyPaths.exportDataUploadBucket;
+// const authFunction = require("./firebase/auth_function");
+const databaseFunction = require("./firebase/database_function");
+const firestoreFunction = require("./firebase/firestore_function");
+const storageFunction = require("./firebase/storage_function");
 
-exports.rtChangePresence = functions.database
+// user trigger
+exports.deleteUserDatabaseAndFirestore = functions.auth
+  .user()
+  .onDelete((user, context) => {
+    const uid = user.uid;
+
+    const databasePromise = databaseFunction.clearDatabaseUsers(uid);
+    // const storagePromise = clearStorageData(uid);
+    const firestorePromise = firestoreFunction.clearFirestoreData(uid);
+
+    return Promise.all([
+      databasePromise,
+      firestorePromise,
+      // storagePromises
+    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
+  });
+
+exports.createUsersDatabase = functions.firestore
+  .document("users/{uid}")
+  .onCreate((snapshot, context) => {
+    const uid = context.params.uid;
+    const val = snapshot.data();
+
+    const databasePromise = databaseFunction.createDatabaseUsers(
+      context.params.uid,
+      val
+    );
+    // const storagePromise = clearStorageData(uid);
+    // const firestorePromise = createFirestoreData(uid);
+
+    return Promise.all([
+      databasePromise,
+      // firestorePromise,
+      // storagePromises
+    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
+  });
+exports.updateUserPresenceFirestore = functions.database
   .ref("users/{uid}/presence")
   .onUpdate(async (change, context) => {
     // Get the data written to Realtime Database
@@ -29,88 +77,34 @@ exports.rtChangePresence = functions.database
     });
   });
 
-exports.cfChangePresence = functions.firestore
-  .document("users/{uid}/presence")
-  .onUpdate(async (change, context) => {
-    // Get the data written to Realtime Database
-    const isOnline = change.after.data()["presence"];
+// exports.updateUserPresenceDatabase = functions.firestore
+//   .document("users/{uid}/presence")
+//   .onUpdate(async (change, context) => {
+//     // Get the data written to Realtime Database
+//     const isOnline = change.after.data()["presence"];
 
-    // Get a reference to the Firestore document
-    const userStatusDatabaseRef = realtime.ref(`users/${context.params.uid}`);
+//     // Get a reference to the Firestore document
+//     const userStatusDatabaseRef = realtime.ref(`users/${context.params.uid}`);
 
-    console.log(`status: ${isOnline}`);
+//     console.log(`status: ${isOnline}`);
 
-    // Update the values on Firestore
-    return userStatusDatabaseRef.update({
-      presence: isOnline,
-      lastSeenInEpoch: Date.now(),
-    });
-  });
-
-// exports.batchUpdate = functions.firestore
-//   .document("batch/{triggerId}")
-//   .onCreate((snap, context) => {
-//     var collecRef = firestore.collection("users");
-//     return collecRef.get().then((snapshot) => {
-//       const ts = admin.database.ServerValue.TIMESTAMP;
-//       let batch = firestore.batch();
-
-//       snapshot.forEach((doc) => {
-//         const ref = doc.ref;
-
-//         batch.update(ref, {
-//           lastUpdate: ts,
-//         });
-//       });
-
-//       return batch.commit();
+//     // Update the values on Firestore
+//     return userStatusDatabaseRef.update({
+//       presence: isOnline,
+//       lastSeenInEpoch: Date.now(),
 //     });
 //   });
 
-// exports.sendByeEmail = functions.auth.user().onDelete((user) => {
-//   return firestore
-//     .document(`users/${user.uid}`)
-//     .delete()
-//     .then((snap) => {
-//       return functions.database.ref(`users/${user.uid}`).delete();
-//     });
-// });
-
-exports.clearUserData = functions.auth.user().onDelete((user) => {
-  const uid = user.uid;
-
-  const databasePromise = clearDatabaseData(uid);
-  // const storagePromise = clearStorageData(uid);
-  const firestorePromise = clearFirestoreData(uid);
-
-  return Promise.all([
-    databasePromise,
-    firestorePromise,
-    // storagePromises
-  ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
-});
-
-// exports.onCreateData = functions.auth.user().onCreate((user) => {
-//   const uid = user.uid;
-
-//   // const databasePromise = createDatabaseData(uid);
-//   // const storagePromise = clearStorageData(uid);
-//   // const firestorePromise = createFirestoreData(uid);
-
-//   return Promise.all([
-//     // databasePromise,
-//     // firestorePromise,
-//     // storagePromises
-//   ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
-// });
-
-exports.onChangeRtUsers = functions.firestore
+exports.updateUsersDatabase = functions.firestore
   .document("users/{uid}")
-  .onCreate((snapshot, context) => {
+  .onUpdate((snapshot, context) => {
     const uid = context.params.uid;
-    const val = snapshot.data();
+    const val = snapshot.after.data();
 
-    const databasePromise = createDatabaseData(context.params.uid, val);
+    const databasePromise = databaseFunction.updateDatabaseUsers(
+      context.params.uid,
+      val
+    );
     // const storagePromise = clearStorageData(uid);
     // const firestorePromise = createFirestoreData(uid);
 
@@ -121,13 +115,17 @@ exports.onChangeRtUsers = functions.firestore
     ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
   });
 
-exports.onChangeRtContents = functions.firestore
-  .document("users/{uid}")
+//books trigger
+exports.createBooksDatabase = functions.firestore
+  .document("books/{uid}")
   .onCreate((snapshot, context) => {
     const uid = context.params.uid;
     const val = snapshot.data();
 
-    const databasePromise = createDatabaseData(context.params.uid, val);
+    const databasePromise = databaseFunction.createDatabaseBooks(
+      context.params.uid,
+      val
+    );
     // const storagePromise = clearStorageData(uid);
     // const firestorePromise = createFirestoreData(uid);
 
@@ -138,148 +136,52 @@ exports.onChangeRtContents = functions.firestore
     ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
   });
 
-// Delete data from all specified paths from the Realtime Database. To add or
-// remove a path, edit the `database[clearData]` array in `user_privacy.json`.
-//
-// This function is called by the top-level `clearData` function.
-//
-// Returns a list of Promises
-const clearDatabaseData = (uid) => {
-  const paths = userPrivacyPaths.database.clearData;
-  const promises = [];
+exports.updateBooksDatabase = functions.firestore
+  .document("books/{uid}")
+  .onUpdate((snapshot, context) => {
+    const uid = context.params.uid;
+    const val = snapshot.after.data();
 
-  for (let i = 0; i < paths.length; i++) {
-    const path = replaceUID(paths[i], uid);
-    promises.push(
-      db
-        .ref(path)
-        .remove()
-        .catch((error) => {
-          // Avoid execution interuption.
-          console.error("Error deleting data at path: ", path, error);
-        })
+    const databasePromise = databaseFunction.updateDatabaseBooks(
+      context.params.uid,
+      val
     );
-  }
+    // const storagePromise = clearStorageData(uid);
+    // const firestorePromise = createFirestoreData(uid);
 
-  return Promise.all(promises).then(() => uid);
-};
+    return Promise.all([
+      databasePromise,
+      // firestorePromise,
+      // storagePromises
+    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
+  });
 
-const createDatabaseData = (uid, val) => {
-  const paths = userPrivacyPaths.database.createData;
-  const promises = [];
+exports.deleteBooksDatabase = functions.firestore
+  .document("books/{uid}")
+  .onDelete(async (snapshot, context) => {
+    const uid = context.params.uid;
 
-  for (let i = 0; i < paths.length; i++) {
-    const path = replaceUID(paths[i], uid);
+    const databasePromise = databaseFunction.clearDatabaseBooks(uid);
+    const storagePromises = await admin
+      .storage()
+      .bucket()
+      .deleteFiles({
+        prefix: `books/${uid}`,
+        function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(
+              `All the Firebase Storage files in users/${userId}/ have been deleted`
+            );
+          }
+        },
+      });
+    // const firestorePromise = createFirestoreData(uid);
 
-    promises.push(
-      db
-        .ref(path)
-        .set(val)
-        .catch((error) => {
-          // Avoid execution interuption.
-          console.error("Error deleting data at path: ", path, error);
-        })
-    );
-  }
-
-  return Promise.all(promises).then(() => uid);
-};
-
-// Clear all specified files from the Realtime Database. To add or remove a
-// path, edit the `storage[clearData]` array in `user_privacy.json`.
-//
-// This function is called by the top-level `clearData` function.
-//
-// Returns a list of Promises
-const clearStorageData = (uid) => {
-  const paths = userPrivacyPaths.storage.clearData;
-  const promises = [];
-
-  for (let i = 0; i < paths.length; i++) {
-    const bucketName = replaceUID(paths[i][0], uid);
-    const path = replaceUID(paths[i][1], uid);
-    const bucket = storage.bucket(bucketName);
-    const file = bucket.file(path);
-    promises.push(
-      file.delete().catch((error) => {
-        console.error("Error deleting file: ", path, error);
-      })
-    );
-  }
-
-  return Promise.all(promises).then(() => uid);
-};
-
-// Clear all specified paths from the Firestore Database. To add or remove a
-// path, edit the `firestore[clearData]` array in `user_privacy.json`.
-//
-// This function is called by the top-level `clearData` function.
-//
-// Returns a list of Promises
-const clearFirestoreData = (uid) => {
-  const paths = userPrivacyPaths.firestore.clearData;
-  const promises = [];
-
-  for (let i = 0; i < paths.length; i++) {
-    const entry = paths[i];
-    const entryCollection = replaceUID(entry.collection, uid);
-    const entryDoc = replaceUID(entry.doc, uid);
-    const docToDelete = firestore.collection(entryCollection).doc(entryDoc);
-    if ("field" in entry) {
-      const entryField = replaceUID(entry.field, uid);
-      const update = {};
-      update[entryField] = FieldValue.delete();
-      promises.push(
-        docToDelete.update(update).catch((err) => {
-          console.error("Error deleting field: ", err);
-        })
-      );
-    } else if (docToDelete) {
-      promises.push(
-        docToDelete.delete().catch((err) => {
-          console.error("Error deleting document: ", err);
-        })
-      );
-    }
-  }
-
-  return Promise.all(promises).then(() => uid);
-};
-
-const createFirestoreData = (uid) => {
-  const paths = userPrivacyPaths.firestore.createData;
-  const promises = [];
-
-  for (let i = 0; i < paths.length; i++) {
-    const entry = paths[i];
-    const entryCollection = replaceUID(entry.collection, uid);
-    const entryDoc = replaceUID(entry.doc, uid);
-    const docToCreate = firestore.collection(entryCollection).doc(entryDoc);
-    if ("field" in entry) {
-      const entryField = replaceUID(entry.field, uid);
-      const update = {};
-      update[entryField] = FieldValue.delete();
-      promises.push(
-        docToCreate.update(update).catch((err) => {
-          console.error("Error deleting field: ", err);
-        })
-      );
-    } else if (docToCreate) {
-      promises.push(
-        docToCreate
-          .set({
-            timestamp: Date.now(),
-          })
-          .catch((err) => {
-            console.error("Error deleting document: ", err);
-          })
-      );
-    }
-  }
-
-  return Promise.all(promises).then(() => uid);
-};
-
-const replaceUID = (str, uid) => {
-  return str.replace(/UID_VARIABLE/g, uid);
-};
+    return Promise.all([
+      databasePromise,
+      // firestorePromise,
+      storagePromises,
+    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
+  });

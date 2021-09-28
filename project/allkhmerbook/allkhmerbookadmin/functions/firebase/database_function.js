@@ -4,7 +4,8 @@ const admin = require("firebase-admin");
 const userPrivacyPaths = require("../user_privacy.json");
 const db = admin.database();
 
-const createDatabaseData = (uid, val) => {
+//Users
+const createDatabaseUsers = (uid, val) => {
   const paths = userPrivacyPaths.database.createData;
   const promises = [];
 
@@ -24,8 +25,8 @@ const createDatabaseData = (uid, val) => {
 
   return Promise.all(promises).then(() => uid);
 };
-const clearDatabaseData = (uid) => {
-  const paths = userPrivacyPaths.database.clearData;
+const clearDatabaseUsers = (uid) => {
+  const paths = userPrivacyPaths.database.createData;
   const promises = [];
 
   for (let i = 0; i < paths.length; i++) {
@@ -44,59 +45,97 @@ const clearDatabaseData = (uid) => {
   return Promise.all(promises).then(() => uid);
 };
 
-exports.onChangeRtContents = functions.firestore
-  .document("users/{uid}")
-  .onCreate((snapshot, context) => {
-    const uid = context.params.uid;
-    const val = snapshot.data();
+const updateDatabaseUsers = (uid, val) => {
+  const paths = userPrivacyPaths.database.createData;
+  const promises = [];
 
-    const databasePromise = createDatabaseData(context.params.uid, val);
-    // const storagePromise = clearStorageData(uid);
-    // const firestorePromise = createFirestoreData(uid);
+  for (let i = 0; i < paths.length; i++) {
+    const path = replaceUID(paths[i], uid);
 
-    return Promise.all([
-      databasePromise,
-      // firestorePromise,
-      // storagePromises
-    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
-  });
-exports.onChangeRtUsers = functions.firestore
-  .document("users/{uid}")
-  .onCreate((snapshot, context) => {
-    const uid = context.params.uid;
-    const val = snapshot.data();
+    promises.push(
+      db
+        .ref(path)
+        .update(val)
+        .catch((error) => {
+          // Avoid execution interuption.
+          console.error("Error deleting data at path: ", path, error);
+        })
+    );
+  }
 
-    const databasePromise = createDatabaseData(context.params.uid, val);
-    // const storagePromise = clearStorageData(uid);
-    // const firestorePromise = createFirestoreData(uid);
+  return Promise.all(promises).then(() => uid);
+};
 
-    return Promise.all([
-      databasePromise,
-      // firestorePromise,
-      // storagePromises
-    ]).then(() => console.log(`Successfully removed data for user #${uid}.`));
-  });
+//Books
+const createDatabaseBooks = (uid, val) => {
+  const paths = userPrivacyPaths.database.createBooks;
+  const promises = [];
 
-exports.rtChangePresence = functions.database
-  .ref("users/{uid}/presence")
-  .onUpdate(async (change, context) => {
-    // Get the data written to Realtime Database
-    const isOnline = change.after.val();
+  for (let i = 0; i < paths.length; i++) {
+    const path = replaceUID(paths[i], uid);
 
-    // Get a reference to the Firestore document
-    const userStatusFirestoreRef = firestore.doc(`users/${context.params.uid}`);
+    promises.push(
+      db
+        .ref(path)
+        .set(val)
+        .catch((error) => {
+          // Avoid execution interuption.
+          console.error("Error deleting data at path: ", path, error);
+        })
+    );
+  }
 
-    console.log(`status: ${isOnline}`);
+  return Promise.all(promises).then(() => uid);
+};
 
-    // Update the values on Firestore
-    return userStatusFirestoreRef.update({
-      presence: isOnline,
-      lastSeenInEpoch: Date.now(),
-    });
-  });
+const updateDatabaseBooks = (uid, val) => {
+  const paths = userPrivacyPaths.database.createBooks;
+  const promises = [];
 
+  for (let i = 0; i < paths.length; i++) {
+    const path = replaceUID(paths[i], uid);
+
+    promises.push(
+      db
+        .ref(path)
+        .update(val)
+        .catch((error) => {
+          // Avoid execution interuption.
+          console.error("Error deleting data at path: ", path, error);
+        })
+    );
+  }
+
+  return Promise.all(promises).then(() => uid);
+};
+const clearDatabaseBooks = (uid) => {
+  const paths = userPrivacyPaths.database.clearBooks;
+  const promises = [];
+
+  for (let i = 0; i < paths.length; i++) {
+    const path = replaceUID(paths[i], uid);
+    promises.push(
+      db
+        .ref(path)
+        .remove()
+        .catch((error) => {
+          // Avoid execution interuption.
+          console.error("Error deleting data at path: ", path, error);
+        })
+    );
+  }
+
+  return Promise.all(promises).then(() => uid);
+};
 const replaceUID = (str, uid) => {
   return str.replace(/UID_VARIABLE/g, uid);
 };
 
-module.exports = { createDatabaseData, clearDatabaseData };
+module.exports = {
+  createDatabaseUsers,
+  clearDatabaseUsers,
+  updateDatabaseUsers,
+  createDatabaseBooks,
+  updateDatabaseBooks,
+  clearDatabaseBooks,
+};

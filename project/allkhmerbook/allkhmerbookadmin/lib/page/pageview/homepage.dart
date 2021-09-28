@@ -1,16 +1,13 @@
-import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:allkhmerbookadmin/app/app.locator.dart';
 import 'package:allkhmerbookadmin/page/pageview/uploadpage.dart';
 import 'package:flutter/material.dart';
 import 'package:pisey_services/pisey_services.dart';
 import 'package:pisey_ui_kits/pisey_ui_kits.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'bookspage.dart';
+import 'userspage.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -21,84 +18,79 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-
   FirebaseAuthService _authService = locator<FirebaseAuthService>();
+  DialogService _dialogService = locator<DialogService>();
+
   Widget child = Text('Hello');
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ScreenTypeLayout(
-        watch: Scaffold(
-          body: Container(
-            child: Text('watch'),
-          ),
-        ),
-        mobile: Scaffold(
-          appBar: _appBar('admin', context),
-          body: buildDesktop(),
-        ),
-        desktop: Scaffold(
-          appBar: _appBar('admin', context),
-          body: buildDesktop(),
-        ),
-        tablet: Scaffold(
-          appBar: _appBar('admin', context),
-          body: buildDesktop(),
-        ),
-      ),
-    );
-  }
+    return ViewModelBuilder<SignInViewModel>.reactive(
+        onModelReady: (model) => model.hasUID(),
+        createNewModelOnInsert: true,
+        fireOnModelReadyOnce: true,
+        initialiseSpecialViewModelsOnce: true,
+        builder: (context, model, child) {
+          // if (model.ishasUID!) {
+          //   return SafeArea(
+          //     child: ScreenTypeLayout(
+          //       watch: Scaffold(
+          //         body: Container(
+          //           child: Text('watch'),
+          //         ),
+          //       ),
+          //       mobile: Scaffold(
+          //         appBar: _appBar('admin', model),
+          //         body: buildDesktop(),
+          //       ),
+          //       desktop: Scaffold(
+          //         appBar: _appBar('admin', model),
+          //         body: buildDesktop(),
+          //       ),
+          //       tablet: Scaffold(
+          //         appBar: _appBar('admin', model),
+          //         body: buildDesktop(),
+          //       ),
+          //     ),
+          //   );
+          // } else {
+          //   return Scaffold(
+          //     body: Center(
+          //       child: Text('User Not found'),
+          //     ),
+          //   );
+          // }
 
-  Future<void> handleTaskExample4(Uint8List data, String ref) async {
-    firebase_storage.UploadTask task =
-        firebase_storage.FirebaseStorage.instance.ref(ref).putData(data);
-
-    // Via a Stream
-    task.snapshotEvents.listen((firebase_storage.TaskSnapshot snapshot) async {
-      // Handle your snapshot events...
-      print('Task state: ${snapshot.state}');
-      if (snapshot.state == firebase_storage.TaskState.success) {
-        var url = await snapshot.ref.getDownloadURL();
-        print('url : $url');
-      }
-      print(
-          'Progress: ${(snapshot.bytesTransferred / snapshot.totalBytes) * 100} %');
-    }, onError: (e) {
-      if (e.code == 'permission-denied') {
-        print('User does not have permission to upload to this reference.');
-      }
-      // Check if canceled by checking error code.
-      if (e.code == 'canceled') {
-        print('The task has been canceled');
-      }
-      // Or, you can also check for cancellations via the final task.snapshot state.
-      if (task.snapshot.state == firebase_storage.TaskState.canceled) {
-        print('The task has been canceled');
-      }
-      // If the task failed for any other reason then state would be:
-      print(firebase_storage.TaskState.error);
-    });
-
-    // // Cancel the upload.
-    // bool canceled = await task.cancel();
-    // print('canceled? $canceled');
-
-    // Or a Task Future (or both).
-    try {
-      await task;
-    } on firebase_core.FirebaseException catch (e) {
-      // Check if canceled by checking error code.
-      if (e.code == 'canceled') {
-        print('The task has been canceled');
-      }
-      // Or, you can also check for cancellations via the final task.snapshot state.
-      if (task.snapshot.state == firebase_storage.TaskState.canceled) {
-        print('The task has been canceled');
-      }
-      // If the task failed for any other reason then state would be:
-      print(firebase_storage.TaskState.error);
-      // ...
-    }
+          if (model.ishasUID!) {
+            return SafeArea(
+              child: ScreenTypeLayout(
+                watch: Scaffold(
+                  body: Container(
+                    child: Text('watch'),
+                  ),
+                ),
+                mobile: Scaffold(
+                  appBar: _appBar('admin', model),
+                  body: buildDesktop(),
+                ),
+                desktop: Scaffold(
+                  appBar: _appBar('admin', model),
+                  body: buildDesktop(),
+                ),
+                tablet: Scaffold(
+                  appBar: _appBar('admin', model),
+                  body: buildDesktop(),
+                ),
+              ),
+            );
+          } else {
+            return Scaffold(
+              body: Center(
+                child: Text('home page'),
+              ),
+            );
+          }
+        },
+        viewModelBuilder: () => SignInViewModel());
   }
 
   Row buildDesktop() {
@@ -129,11 +121,11 @@ class _HomepageState extends State<Homepage> {
               pageScrollPhysics: NeverScrollableScrollPhysics(),
               drawerKey: _drawerKey,
               contents: <Widget>[
-                _ListenUser(),
-                Text('Content3'),
+                Text('Content4'),
+                BooksPage(),
                 UploadPage(),
                 Text('Content4'),
-                Text('Content4'),
+                UsersPage()
               ],
               tabs: <LocalModel>[
                 LocalModel(
@@ -165,22 +157,11 @@ class _HomepageState extends State<Homepage> {
                   ? true
                   : false),
         ),
-        // if ((checkDeviceType(context) == DeviceScreenType.desktop))
-        //   Expanded(
-        //     child: Scaffold(
-        //       body: Container(
-        //         child: Text(
-        //           'Press',
-        //         ),
-        //       ),
-        //     ),
-        //     flex: 3,
-        //   )
       ],
     );
   }
 
-  PreferredSize? _appBar(ab, BuildContext context) {
+  PreferredSize? _appBar(ab, SignInViewModel model) {
     return PreferredSize(
         preferredSize: Size.fromHeight(80),
         child: Container(
@@ -228,9 +209,14 @@ class _HomepageState extends State<Homepage> {
                 children: <Widget>[
                   PsButtonBouncing(
                     onTap: () async {
-                      await _authService.signOut().catchError((onError) {
-                        print(onError);
-                      });
+                      // await _authService.signOut().catchError((onError) {
+                      //   print(onError);
+                      // }).then((value) {
+                      //   model.ishasUID;
+                      // });
+                      await model.signOut();
+                      // var user = await _authService.getCurrentUser();
+                      // await _sharedPreferenceService.removeStringUID('uid');
                     },
                     child: Container(
                       height: 40,
@@ -246,6 +232,7 @@ class _HomepageState extends State<Homepage> {
                       ),
                     ),
                   ),
+                  // _SignOutButton(),
                   SizedBox(
                     width: 21.0,
                   ),
@@ -304,28 +291,32 @@ class _HomepageState extends State<Homepage> {
   }
 }
 
-// class _UploadPage extends ViewModelWidget<UploadViewModel> {
-//   _UploadPage({Key? key}) : super(key: key, reactive: true);
-//   @override
-//   Widget build(BuildContext context, UploadViewModel viewModel) {
-//     return UploadPage(
-//       isLoading: viewModel.isBusy,
-//       onSubmit: (data) {
-//         // viewModel.setMapFile({
-//         //   data['image'][0]['name']: data['image'][0]['bytes'],
-//         //   data['pdf'][0]['name']: data['pdf'][0]['bytes'],
-//         // });
-//         if (viewModel.fileMapBytes != null) {
-//           viewModel.uploadMultiFiles('books/');
-//         }
-//       },
-//     );
-//   }
-// }
+class _SignOutButton extends ViewModelWidget<SignInViewModel> {
+  _SignOutButton(
+      // this.thisContext,
+      {
+    Key? key,
+  }) : super(key: key, reactive: true);
+  // final BuildContext thisContext;
 
-class _ListenUser extends ViewModelWidget<StreamUser> {
   @override
-  Widget build(BuildContext context, StreamUser viewModel) {
-    return Text('${viewModel.data!.uid}');
+  Widget build(BuildContext context, SignInViewModel model) {
+    return PsButtonBouncing(
+      onTap: () async {
+        await model.signOut();
+      },
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          image: DecorationImage(
+            image: const AssetImage('assets/images/profile.jpg'),
+            fit: BoxFit.cover,
+          ),
+          border: Border.all(width: 1.0, color: const Color(0xff707070)),
+        ),
+      ),
+    );
   }
 }

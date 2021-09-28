@@ -7,32 +7,25 @@
   },
   "emulators": {
     "functions": {
-      "host":"192.168.43.118",
-      "port": 5001
+      "port": 5000
     },
     "firestore": {
-      "host":"192.168.43.118",
-      "port": 8081
+      "port": 8080
     },
     "database": {
-      "host":"192.168.43.118",
       "port": 9001
     },
     "hosting": {
-      "host":"192.168.43.118",
-      "port": 5000
+      "port": 5050
     },
     "pubsub": {
-      "host":"192.168.43.118",
-      "port": 8086
+      "port": 8085
     },
     "auth": {
-      "host":"192.168.43.118",
-      "port": 9099
+      "port": 9098
     },
     "storage": {
-      "host":"192.168.43.118",
-      "port": 9199
+      "port": 9190
     },
     "ui": {
       "enabled": true
@@ -47,5 +40,19 @@
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

@@ -27,29 +27,33 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  line_icons: ^2.0.1
+  # line_icons: ^2.0.1
+  # firebase_storage: ^9.0.0
   provider: ^5.0.0
-  firebase_auth:
-  cloud_firestore:
-  firebase_database:
-  firebase_core:
+  # firebase_auth:
+  # cloud_firestore:
+  # firebase_storage:
+  # firebase_database:
+  # firebase_core: ^1.3.0
   pisey_ui_kits:
     path: ../../../package/pisey_ui_kits
   pisey_services:
     path: ../../../package/pisey_services
-  vertical_tabs: ^0.2.0
+  # vertical_tabs: ^0.2.0
 
   firebase_app_check:
 
   stacked: ^2.1.8
-  flutter_hooks: ^0.17.0
-  stacked_hooks: ^0.2.1
-  observable_ish: ^3.0.0
+  # flutter_hooks: ^0.17.0
+  # stacked_hooks: ^0.2.1
+  # observable_ish: ^3.0.0
   stacked_services: ^0.8.7
-  connectivity:
-  image_picker:
+  # connectivity:
+  # image_picker:
+  bot_toast: ^4.0.1
 
   json_annotation: ^4.0.1
+  beamer: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +75,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - firebase.json
 
   #   - images/a_dot_ham.jpeg
 

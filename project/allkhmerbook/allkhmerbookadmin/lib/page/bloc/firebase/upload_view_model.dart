@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:allkhmerbookadmin/app/app.locator.dart';
 import 'package:pisey_services/pisey_services.dart';
@@ -11,6 +12,8 @@ class UploadViewModel extends BaseViewModel {
   final StorageService _firebaseStorageService = locator<StorageService>();
   final FirestoreService _realtimeDatabaseService = locator<FirestoreService>();
   final bottomsheet = locator<BottomSheetService>();
+  final DialogService _dialogService =
+      StackedLocator.instance.locator<DialogService>();
   final snackbar = locator<SnackbarService>();
 
   List<UploadModel>? _uploadModel = [];
@@ -42,17 +45,17 @@ class UploadViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void removeListFile(UploadModel model, int index) {
-    if (_uploadModel!.any((element) => element.formname == model.formname)) {
-      // List<UploadModel>? listModel = _uploadModel!
-      //     .where((element) => element.formname == model.formname)
-      //     .toList();
-      // listModel.forEach((value) {
-      //   print(value.name);
-      // });
-      // _uploadModel!.removeWhere((element) => element.id == index);
-    }
-  }
+  // void removeListFile(UploadModel model, int index) {
+  //   if (_uploadModel!.any((element) => element.formname == model.formname)) {
+  //     // List<UploadModel>? listModel = _uploadModel!
+  //     //     .where((element) => element.formname == model.formname)
+  //     //     .toList();
+  //     // listModel.forEach((value) {
+  //     //   print(value.name);
+  //     // });
+  //     // _uploadModel!.removeWhere((element) => element.id == index);
+  //   }
+  // }
 
   void cleaListFile() {
     if (_uploadModel!.isNotEmpty) {}
@@ -63,6 +66,7 @@ class UploadViewModel extends BaseViewModel {
 
   Map<String, dynamic>? _dataMap = {};
   Map<String, dynamic>? get dataMap => _dataMap;
+
   void setMapData(Map<String, dynamic> setdataMap) {
     _dataMap!.addAll(setdataMap);
     notifyListeners();
@@ -71,29 +75,28 @@ class UploadViewModel extends BaseViewModel {
   Future<void> uploadMultiFiles(
     String refWithoutName,
   ) async {
-    setBusy(false);
-    var doc = await _realtimeDatabaseService
-        .setDataWithDocID('books', _dataMap!)
-        .catchError((onError) {
-      snackbar.showSnackbar(message: '$onError');
-    });
-    _uploadModel!.forEach((element1) {
-      int index = _uploadModel!.indexWhere((element2) =>
-          element1.formname == element2.formname &&
-          element1.timestamp == element2.timestamp &&
-          element1.name == element2.name);
-      _uploadModel![index].state = firebase_storage.TaskState.running;
-      _firebaseStorageService
-          .uploadData(
-              element1.files!.bytes!,
-              // refWithoutName +
-              //     '${_dataMap!['grade']}/' +
-              //     '${element1.files!.name}'
-              '${doc!.path}/${element1.files!.name}')
+    try {
+      setBusy(false);
+      var doc = await _realtimeDatabaseService
+          .setDataWithDocID('books', _dataMap!)
           .catchError((onError) {
         snackbar.showSnackbar(message: '$onError');
-      }).then((event) {
-        event.snapshotEvents.listen((snapshot) async {
+      });
+      _uploadModel!.forEach((element1) async {
+        int index = _uploadModel!.indexWhere((element2) =>
+            element1.formname == element2.formname &&
+            element1.timestamp == element2.timestamp &&
+            element1.name == element2.name);
+        _uploadModel![index].state = firebase_storage.TaskState.running;
+
+        var event = _firebaseStorageService.uploadData(
+            element1.files!.bytes!,
+            // refWithoutName +
+            //     '${_dataMap!['grade']}/' +
+            //     '${element1.files!.name}'
+            '${doc!.path}/${element1.files!.name}');
+
+        event!.snapshotEvents.listen((snapshot) async {
           _uploadModel![index].byteTransfer = snapshot.bytesTransferred;
           switch (snapshot.state) {
             case firebase_storage.TaskState.paused:
@@ -131,7 +134,10 @@ class UploadViewModel extends BaseViewModel {
           snackbar.showSnackbar(message: '$onError');
         });
       });
-    });
-    notifyListeners();
+      notifyListeners();
+    } catch (e) {
+      setBusy(false);
+      _dialogService.showDialog(title: '$e');
+    }
   }
 }

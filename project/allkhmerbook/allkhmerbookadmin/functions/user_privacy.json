@@ -12,8 +12,11 @@
         "/users/UID_VARIABLE",
         "/admins/UID_VARIABLE"
       ],
-      "createContents": [
-        "/contents/UID_VARIABLE"
+      "createBooks": [
+        "/books/UID_VARIABLE"
+      ],
+      "clearBooks": [
+        "/books/UID_VARIABLE"
       ]
     },
     "firestore": {
@@ -35,8 +38,8 @@
     },
     "storage": {
       "clearData": [
-        ["wipeout-takeout.appspot.com", "UID_VARIABLE/sample_data.json"],
-        ["wipeout-takeout.appspot.com", "UID_VARIABLE"]
+        ["allkhmerbooktest.appspot.com", "books/UID_VARIABLE/sample_data.json"],
+        ["allkhmerbooktest.appspot.com", "books/UID_VARIABLE"]
       ],
       "exportData": [
         ["wipeout-takeout.appspot.com", "UID_VARIABLE/sample_data.json"]
