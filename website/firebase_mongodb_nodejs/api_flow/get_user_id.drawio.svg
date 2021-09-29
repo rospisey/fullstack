@@ -1,4 +1,4 @@
-<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="321px" height="202px" viewBox="-0.5 -0.5 321 202" content="&lt;mxfile&gt;&lt;diagram id=&quot;atxXdWPsS7ZLRwHl6-On&quot; name=&quot;Page-1&quot;&gt;1VZNb9swDP01vgb+aJPu2jTZDh0wIMB2HNiItdXJpiHLibNfPzqiv+oU67Ciwy6G9PgoiY9PtoNknTcfLZTZZ1JogjhUTZDcBXEc34T8bIGTAKvIA6nVykMjYKd/ooCSl9ZaYTUhOiLjdDkF91QUuHcTDKyl45T2SGa6awkpzoDdHswc/aaVyzx6cx0O+CfUadbtHIUSyaEjC1BloOg4gpJNkKwtkfOjvFmjabXrdPF52xei/cEsFu41Cdc+4QCmltrkXO7UFYuKa5cpWZdRSgWYzYDeWqoLhe2KIc8Gzj1RyWDE4BM6d5JGQu2IoczlRqJ+z3ajF8sQqKLa7oWVSOfBpiisq15Cth5Sjs6emGLRgNOH6eogJkh73qATD0Sq85QenlobxaGBBzQ+DUrNrAMvtq0rtFWbu7plXVdexTBDpdHd6+IHqjtw8DX6XvbtXyyYvyVauMqzu4YkowqkV6NeDEq3sh0z7XBXwlmQI9+0S6peEPGA1mEzguaKddHOp3JRO4cfB9f3lGzk+GX4xxrzVGS+7NTVf+zUq7lTl+/n1NZ8f2PJ8aV6E0vO/HdBwFdbMvrw7zy5nHny/FZ4Zkt+x5ftkGsEY9BQaiFnMUq0mk+A9nnsyxD4naCPusHuAxlNDP5GcifvK/fw5TvHRr8PyeYX&lt;/diagram&gt;&lt;/mxfile&gt;">
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="321px" height="352px" viewBox="-0.5 -0.5 321 352" content="&lt;mxfile&gt;&lt;diagram id=&quot;atxXdWPsS7ZLRwHl6-On&quot; name=&quot;Page-1&quot;&gt;1ZbbcpswEIafxrceDjEmt3Hs5sKddsYz7WVHhg0oESwjhMF9+i5InAKZuG0OkxuP9O9KYr/9hVm4m6T6IlkWf8UQxMKxwmrh3i4cx/Et+q2FsxHWthYiyUMtDYQD/w1GNOuigoeQjxIVolA8G4sBpikEaqQxKbEcp92jGJ+asQgmwiFgYqr+5KGKteqvrF6/Ax7F7cm2ZSIJa5ONkMcsxHIguduFu5GISo+SagOiZtdy0et2z0S7B5OQqksWrPSCExOFqc08lzq3xUJItZspShVjhCkT2169kVikIdQ7WjTrc/aIGYk2iQ+g1Nk0khUKSYpVIkxUn1kf9GwZRsqxkIHJck3nmYzAZF11CMl6gAkoeaYUCYIpfhrvzowJoi6v50QDg6qZ4vGhtpFjCXYEoZexjFPWiTbbFTnIvF67viGua03RiiHkoPY8fYTwlin2w/6Vde1fLil/h7hUuc5uG+IOKjC9GvSiJ11jK2Ou4JCxBkhJN22O6gzEE0gF1UCaEmujrU/NRW0dXvau71LigeM9668Z09Rgnnfq+hM79WrqVO/9nFqb738sObxUr2LJif9mAF5sSfv64zx5/Yk96U096b+NJyfYvAm25mX6hBz9NWb1kOpgQoDASLKEys1AcjoS5NPY9z7wkg/veQXtd4U96sErudR9R5dO+Pov27KFG5wFp8ovQHbUiPbHTmDBY9SA+1Yo2uXtWK7GLDu2A5beDEr/ny58/+3VxAYfsO72Dw==&lt;/diagram&gt;&lt;/mxfile&gt;">
     <defs/>
     <g>
         <path d="M 60 60 L 60 133.63" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
@@ -39,6 +39,8 @@
                 </text>
             </switch>
         </g>
+        <path d="M 260 200 L 260 263.63" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+        <path d="M 260 268.88 L 256.5 261.88 L 260 263.63 L 263.5 261.88 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
         <path d="M 250 200 L 210 200 Q 200 200 203.16 190.51 L 216.84 149.49 Q 220 140 230 140 L 310 140 Q 320 140 316.84 149.49 L 303.16 190.51 Q 300 200 290 200 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -56,6 +58,8 @@
                 </text>
             </switch>
         </g>
+        <path d="M 230 286 C 230 264.67 290 264.67 290 286 L 290 334 C 290 355.33 230 355.33 230 334 Z" fill="#ffffff" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
+        <path d="M 230 286 C 230 302 290 302 290 286" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
     </g>
     <switch>
         <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
