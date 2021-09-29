@@ -1,6 +1,8 @@
-<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="121px" height="61px" viewBox="-0.5 -0.5 121 61" content="&lt;mxfile&gt;&lt;diagram id=&quot;atxXdWPsS7ZLRwHl6-On&quot; name=&quot;Page-1&quot;&gt;jZJPb4QgEMU/DXeVtNlz7e72sicPPROZCgk6hh1X3U+/Wgb/xDTphcDvvYHhgZB5PVy9as0NNTiRJXoQ8lNkWSZP0ziDMYIkgMpbHVC6gsI+gWG0dVbDfWckREe23cMSmwZK2jHlPfZ72w+6/amtquAAilK5I/22mkygp7dk5V9gKxNPThNWahXNDO5Gaew3SJ6FzD0ihVk95ODm7GIuoe7yh7o05qGh/xTIUPBQruO7iUxeELk7GuOVPXaNhrkqFfKjN5agaFU5q/30xhMzVDuWj11wYw/wBMMGcVdXwBrIj5MlqjEh/iIx237Ne7GYTdbvzBQ/cbXsvKYwTTiIuFwD/9U2v1aeXw==&lt;/diagram&gt;&lt;/mxfile&gt;">
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="121px" height="201px" viewBox="-0.5 -0.5 121 201" content="&lt;mxfile&gt;&lt;diagram id=&quot;atxXdWPsS7ZLRwHl6-On&quot; name=&quot;Page-1&quot;&gt;vZRNb9swDIZ/ja+BP/q1a9NkPXSnANtxYCPOUiebhkzHyX795IjyB5ICHTD0YpivXkrmQ1pJsa6OXx00+hsptEmeqmNSPCV5nhcP/jkIpyikQSidUUHKJmFn/qCI0dYZhe3CyESWTbMU91TXuOeFBs5Rv7T9Irs8tYESL4TdHuyl+sMo1kF9uE0n/RlNqePJWSorFUSzCK0GRf1MKjZJsXZEHN6q4xrtwC5yCXnbd1bHD3NY80cSbkPCAWwntcl38SkWi8rXLiE51lRSDXYzqY+OulrhsGPqo8nzQtR4MfPiGzKfpJHQMXlJc2VlNZw5HPRuGSK11Lm9uArpPLgSxXUzIvSjh1Qhu5O3OLTA5rDcHWQIytE3cfIvguoc0uvbMEZ5auEVbUiDxnjXwW+27Vp07ZB7/+i53geKqUZlkF9M/RvVEzB8z342Y/tXK+/fEq24De7YkGJWgfRq1ouJ9ICt14Zx18AZSO//tGtUr0A8oGM8zqRLYnE1zqn8qHHC+2nqR4ueTfxd+s+MfSiYPxv5zf9GfsH3Shc+jDz78mnMfTjdPGfr7PouNn8B&lt;/diagram&gt;&lt;/mxfile&gt;">
     <defs/>
     <g>
+        <path d="M 60 60 L 60 133.63" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
+        <path d="M 60 138.88 L 56.5 131.88 L 60 133.63 L 63.5 131.88 Z" fill="#000000" stroke="#000000" stroke-miterlimit="10" pointer-events="all"/>
         <rect x="0" y="0" width="120" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -8,13 +10,30 @@
                     <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 30px; margin-left: 1px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                #Foo
+                                api/v1/users/{id}
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="60" y="34" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
-                    #Foo
+                    api/v1/users/{id}
+                </text>
+            </switch>
+        </g>
+        <rect x="0" y="140" width="120" height="60" rx="9" ry="9" fill="#ffffff" stroke="#000000" pointer-events="all"/>
+        <g transform="translate(-0.5 -0.5)">
+            <switch>
+                <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 170px; margin-left: 1px;">
+                        <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
+                            <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                api/v1/users/{id}
+                            </div>
+                        </div>
+                    </div>
+                </foreignObject>
+                <text x="60" y="174" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">
+                    api/v1/users/{id}
                 </text>
             </switch>
         </g>
