@@ -8,7 +8,7 @@
 
 link https://google.com
 
-### ![img](api.svg)
+### ![img](https://github.com/rospisey/fullstack/raw/main/website/firebase_mongodb_nodejs/api.svg)
 
 ###
 
