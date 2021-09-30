@@ -4,4 +4,4 @@
 
 ### `/api/v1/users/id`
 
-![alt](api.html)
+[alt](api.html)
