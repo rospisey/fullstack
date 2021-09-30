@@ -1,0 +1,13 @@
+<svg id="container" preserveAspectRatio="none meet" class="mm-0pt66k-1" xmlns="http://www.w3.org/2000/svg"><style>.mm-0pt66k-1 a { color: #0097e6; }
+.mm-0pt66k-1 a:hover { color: #00a8ff; }
+.mm-0pt66k-1-g &gt; path { fill: none; }
+.mm-0pt66k-1-fo &gt; div { font: 300 16px/20px sans-serif; white-space: nowrap; }
+.mm-0pt66k-1-fo code { padding: .2em .4em; font-size: calc(1em - 2px); color: #555; background-color: #f0f0f0; border-radius: 2px; }
+.mm-0pt66k-1-fo del { text-decoration: line-through; }
+.mm-0pt66k-1-fo em { font-style: italic; }
+.mm-0pt66k-1-fo strong { font-weight: bolder; }
+.mm-0pt66k-1-fo pre { margin: 0; }
+.mm-0pt66k-1-fo pre[class*=language-] { padding: 0; }
+.mm-0pt66k-1-g &gt; g { cursor: pointer; }
+
+</style><g class="mm-0pt66k-1-g" transform="translate(-114.8507593427795,209.05704148955343) scale(1.5951455965535133)"><path d="M190,10C230,10,230,-15,270,-15" stroke="rgb(255, 127, 14)" stroke-width="2"></path><path d="M190,10C230,10,230,10,270,10" stroke="rgb(44, 160, 44)" stroke-width="2"></path><path d="M190,10C230,10,230,35,270,35" stroke="rgb(214, 39, 40)" stroke-width="2"></path><g transform="translate(270, 15)"><rect x="-1" y="19" width="109" height="2" fill="rgb(214, 39, 40)"></rect><foreignObject class="mm-0pt66k-1-fo" x="8" y="0" height="20" width="91" style="opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Main Topic 3</div></foreignObject></g><g transform="translate(270, -10)"><rect x="-1" y="19" width="109" height="2" fill="rgb(44, 160, 44)"></rect><foreignObject class="mm-0pt66k-1-fo" x="8" y="0" height="20" width="91" style="opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Main Topic 2</div></foreignObject></g><g transform="translate(270, -35)"><rect x="-1" y="19" width="109" height="2" fill="rgb(255, 127, 14)"></rect><foreignObject class="mm-0pt66k-1-fo" x="8" y="0" height="20" width="91" style="opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Main Topic 1</div></foreignObject></g><g transform="translate(80,-10)"><rect x="-1" y="18" width="112" height="4" fill="rgb(31, 119, 180)"></rect><circle stroke-width="1.5" cx="110" cy="20" r="6" stroke="rgb(31, 119, 180)" fill="rgb(255, 255, 255)"></circle><foreignObject class="mm-0pt66k-1-fo" x="8" y="0" height="20" width="94" style="opacity: 1;"><div xmlns="http://www.w3.org/1999/xhtml">Central Topic</div></foreignObject></g></g></svg>
